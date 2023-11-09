@@ -3,6 +3,10 @@
 #include "Thread.h"
 
 #define TOTALPROCESOS 3
+DigitalOut led1(LED1);
+DigitalOut led2(LED2);
+DigitalOut led3(LED3);
+
 
 // Estructura de procesos
 struct PROCESS {
@@ -41,12 +45,23 @@ void comprobarReinicios(){
 void ejecutarProceso(int indice) {
     printf("El proceso número %d se está ejecutando\n", indice + 1);
     procesos[indice].tiempoRestante--;
+    
+    if (indice == 0){
+        led1 = !led1;
+    }
+    if (indice == 1){
+        led2 = !led2;
+    }
+    if (indice == 2){
+        led3 = !led3;
+    }
 }
 
 void planificador() {
     int indice = -1;
     comprobarReinicios();
     indice = comprobarProcesoPrioritario();
+    led1=0; led2=0; led3=0;
     if (indice != -1) {
         ejecutarProceso(indice);
     }else{
